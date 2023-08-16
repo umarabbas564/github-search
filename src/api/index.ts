@@ -20,7 +20,7 @@ export class BackendError extends Error {
 export type ApiError = BackendError | AxiosError;
 
 const headers = {
-  //This is the static token needs to be replaced manually in config file
+  // This is the static token needs to be replaced manually in config file
   Authorization: API_AUTH_TOKEN,
   "X-GitHub-Api-Version": "2022-11-28",
 };

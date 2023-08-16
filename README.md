@@ -1,27 +1,49 @@
-# React + TypeScript + Vite
+# github-search app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Setup
 
-Currently, two official plugins are available:
+## clone repo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+git clone https://github.com/umarabbas564/github-search.git
 
-## Expanding the ESLint configuration
+## navigate to repo
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+cd github-search
 
-- Configure the top-level `parserOptions` property like this:
+# Commands
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+## install deps
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+yarn
+
+## start server
+
+yarn start
+
+## build project
+
+yarn run build
+
+# folder structure
+
+src
+src -> api (Api Calls)
+src -> api -> types (Types)
+src -> assets (Assets)
+src -> componenets (Shared Components)
+src -> config (Configurations)
+src -> hooks (Custom Hooks)
+src -> layouts (Layouts)
+src -> lib (Third Party Libraries)
+src -> routes (Application Routes)
+src -> store (Redux Store)
+src -> styles (Global Styles)
+src -> views (Main pages)
+
+## Details
+
+Data is being fetched for user's & repos using axios and stored in redux store via persist. if data is present in store than no API will be called it will fetch from store. For fecthing more data infinite scroll is implemented on bottom reached it will increase page number and fetch updated data. For styling Css-in-js is being used using Emotion library.
+
+## Note
+
+For fetching an API you nedd to add your github auth personal token that can be added into src -> config.
