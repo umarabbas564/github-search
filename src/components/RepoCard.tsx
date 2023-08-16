@@ -76,7 +76,7 @@ const RepoCard: React.FC<UserCardProps> = ({ repos }) => {
     <>
       {repos.map((item: Repo, index: number) => (
         <div key={index} css={cardGridCss}>
-          <Link css={repoCardWrapperCss} to={item.url}>
+          <Link css={repoCardWrapperCss} to={item.url} target="_blank">
             <h2>{item.full_name}</h2>
             <p css={descriptionCss}>{item?.description}</p>
             <div css={cardMetaContainerCss}>

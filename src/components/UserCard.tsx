@@ -65,7 +65,7 @@ const UserCard: React.FC<UserCardProps> = ({ users }) => {
     <>
       {users.map((item: User, index: number) => (
         <div key={index} css={cardGridCss}>
-          <Link css={userCardWrapperCss} to={item.url}>
+          <Link css={userCardWrapperCss} to={item.url} target="_blank">
             <div css={avatarWrapperCss}>
               <Avatar src={item.avatar_url} size={"60px"} alt="user-img" />
             </div>
