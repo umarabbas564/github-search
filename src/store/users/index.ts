@@ -53,7 +53,7 @@ const searchUserSlice = createSlice({
           const upadtedData = payload.filter(
             (item) => !state.data.includes(item)
           );
-          state.data.unshift(...upadtedData);
+          state.data.push(...upadtedData);
         }
       )
       .addCase(SearchUserData.rejected, (state, action) => {

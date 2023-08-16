@@ -9,7 +9,7 @@ import Loader from "../components/Loader";
 import { SearchReposData } from "../store/repos";
 import { SearchUserData } from "../store/users";
 import { AppDispatch, RootState } from "store";
-import { EntityType, User } from "../api/types";
+import { EntityType, User, Repo } from "../api/types";
 import ErrorScreen from "../components/ErrorScreen";
 import { useIntersectionObserver } from "../hooks/useInfiniteScroll";
 import { PAGE_SIZE } from "../config/constants";
@@ -30,6 +30,7 @@ const ListView: React.FC = () => {
   const usersListState = useSelector((state: RootState) => state.users);
   const reposListState = useSelector((state: RootState) => state.repos);
   const isLoading = reposListState.loading || usersListState.loading;
+  const [showBottomLoader, setShowBottomLoader] = useState<boolean>(false);
   const [showCards, setShowCards] = useState<boolean>(false);
   const [showErrorScreen, setShowErrorScreen] = useState<boolean>(false);
   const [currentPageRecordCount, setCurrentPageRecordCount] = useState<number>(
@@ -71,10 +72,12 @@ const ListView: React.FC = () => {
       .then((res: User[]) => {
         setShowErrorScreen(false);
         setCurrentPageRecordCount(res.length || 0);
+        setShowBottomLoader(false);
       })
       .catch(() => {
         setShowCards(false);
         setShowErrorScreen(true);
+        setShowBottomLoader(false);
       });
   };
 
@@ -87,12 +90,15 @@ const ListView: React.FC = () => {
       })
     )
       .unwrap()
-      .then(() => {
+      .then((res: Repo[]) => {
         setShowErrorScreen(false);
+        setShowBottomLoader(false);
+        setCurrentPageRecordCount(res.length || 0);
       })
       .catch(() => {
         setShowCards(false);
         setShowErrorScreen(true);
+        setShowBottomLoader(false);
       });
   };
 
@@ -108,7 +114,10 @@ const ListView: React.FC = () => {
   }, [pageNumber]);
 
   useEffect(() => {
-    isBottomVisible && setPageNumber(pageNumber + 1);
+    if (isBottomVisible) {
+      setShowBottomLoader(true);
+      setPageNumber(pageNumber + 1);
+    }
   }, [isBottomVisible]);
 
   const handleInputChange = (value: string) => {
@@ -158,19 +167,20 @@ const ListView: React.FC = () => {
         onSelectChange={handleSelectChange}
         selectOptions={dropDownOptions}
       />
-      {isLoading && (
+      {isLoading && !showBottomLoader && (
         <Loader
           css={{
             paddingTop: 60,
           }}
         />
       )}
-      {showCards && !isLoading && (
+      {showCards && (
         <>
           <CardGrid
             selectedEntity={selectedEntity}
             userList={usersListState.data}
             repoList={reposListState.data}
+            showLoaderAtBottom={showBottomLoader}
           />
         </>
       )}

@@ -52,7 +52,7 @@ const searchRepoSlice = createSlice({
           const upadtedData = payload.filter(
             (item) => !state.data.includes(item)
           );
-          state.data.unshift(...upadtedData);
+          state.data.push(...upadtedData);
         }
       )
       .addCase(SearchReposData.rejected, (state, action) => {

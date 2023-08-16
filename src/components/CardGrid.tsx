@@ -5,6 +5,7 @@ import { User, Repo } from "../api/types";
 import UserCard from "./UserCard";
 import RepoCard from "./RepoCard";
 import { EntityType } from "../api/types";
+import Loader from "./Loader";
 
 const gridContainerCss = css`
   display: grid;
@@ -21,17 +22,22 @@ type CardGridProps = {
   selectedEntity: string;
   userList: User[];
   repoList: Repo[];
+  showLoaderAtBottom: boolean;
 };
 const CardGrid: React.FC<CardGridProps> = ({
   selectedEntity,
   userList,
   repoList,
+  showLoaderAtBottom,
 }) => {
   return (
-    <div css={gridContainerCss}>
-      {selectedEntity == EntityType.Users && <UserCard users={userList} />}
-      {selectedEntity == EntityType.Repos && <RepoCard repos={repoList} />}
-    </div>
+    <>
+      <div css={gridContainerCss}>
+        {selectedEntity == EntityType.Users && <UserCard users={userList} />}
+        {selectedEntity == EntityType.Repos && <RepoCard repos={repoList} />}
+      </div>
+      {showLoaderAtBottom && <Loader css={{ paddingTop: 18 }} />}
+    </>
   );
 };
 
